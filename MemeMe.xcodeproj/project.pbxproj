@@ -16,6 +16,10 @@
 		00DFF9381D8A238900118433 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00DFF9361D8A238900118433 /* LaunchScreen.storyboard */; };
 		00DFF9431D8A238900118433 /* MemeMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DFF9421D8A238900118433 /* MemeMeTests.swift */; };
 		00DFF94E1D8A238900118433 /* MemeMeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DFF94D1D8A238900118433 /* MemeMeUITests.swift */; };
+		00FC72D01DB06FB200FF9B35 /* SentMemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC72CF1DB06FB100FF9B35 /* SentMemeCollectionViewController.swift */; };
+		00FC72D21DB06FDD00FF9B35 /* SentMemeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC72D11DB06FDD00FF9B35 /* SentMemeTableViewController.swift */; };
+		00FC72D41DB0754600FF9B35 /* MemeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC72D31DB0754600FF9B35 /* MemeCollectionViewCell.swift */; };
+		00FC72D61DB3DA9D00FF9B35 /* MemeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC72D51DB3DA9D00FF9B35 /* MemeDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		00DFF9491D8A238900118433 /* MemeMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemeMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DFF94D1D8A238900118433 /* MemeMeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeMeUITests.swift; sourceTree = "<group>"; };
 		00DFF94F1D8A238900118433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00FC72CF1DB06FB100FF9B35 /* SentMemeCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMemeCollectionViewController.swift; sourceTree = "<group>"; };
+		00FC72D11DB06FDD00FF9B35 /* SentMemeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SentMemeTableViewController.swift; sourceTree = "<group>"; };
+		00FC72D31DB0754600FF9B35 /* MemeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeCollectionViewCell.swift; sourceTree = "<group>"; };
+		00FC72D51DB3DA9D00FF9B35 /* MemeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +133,10 @@
 				00DFF9341D8A238900118433 /* Assets.xcassets */,
 				00DFF9361D8A238900118433 /* LaunchScreen.storyboard */,
 				00DFF9391D8A238900118433 /* Info.plist */,
+				00FC72CF1DB06FB100FF9B35 /* SentMemeCollectionViewController.swift */,
+				00FC72D11DB06FDD00FF9B35 /* SentMemeTableViewController.swift */,
+				00FC72D31DB0754600FF9B35 /* MemeCollectionViewCell.swift */,
+				00FC72D51DB3DA9D00FF9B35 /* MemeDetailViewController.swift */,
 			);
 			path = MemeMe;
 			sourceTree = "<group>";
@@ -210,21 +222,25 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = zenkiu;
 				TargetAttributes = {
 					00DFF9291D8A238800118433 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = GLG6UUPRG8;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 					00DFF93D1D8A238900118433 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = GLG6UUPRG8;
+						LastSwiftMigration = 0800;
 						TestTargetID = 00DFF9291D8A238800118433;
 					};
 					00DFF9481D8A238900118433 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = GLG6UUPRG8;
+						LastSwiftMigration = 0800;
 						TestTargetID = 00DFF9291D8A238800118433;
 					};
 				};
@@ -282,9 +298,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				00DFF9301D8A238800118433 /* ViewController.swift in Sources */,
+				00FC72D01DB06FB200FF9B35 /* SentMemeCollectionViewController.swift in Sources */,
 				009279D21DAAEEFF00395598 /* Meme.swift in Sources */,
 				009279CF1DAAE1AA00395598 /* MemeTextFieldDelegate.swift in Sources */,
+				00FC72D41DB0754600FF9B35 /* MemeCollectionViewCell.swift in Sources */,
 				00DFF92E1D8A238800118433 /* AppDelegate.swift in Sources */,
+				00FC72D21DB06FDD00FF9B35 /* SentMemeTableViewController.swift in Sources */,
+				00FC72D61DB3DA9D00FF9B35 /* MemeDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,8 +373,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -376,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -398,8 +420,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -415,9 +439,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -426,10 +451,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = GLG6UUPRG8;
 				INFOPLIST_FILE = MemeMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMeTwo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -437,10 +468,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = GLG6UUPRG8;
 				INFOPLIST_FILE = MemeMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMeTwo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -452,6 +489,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MemeMe.app/MemeMe";
 			};
 			name = Debug;
@@ -464,6 +502,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MemeMe.app/MemeMe";
 			};
 			name = Release;
@@ -475,6 +514,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = MemeMe;
 			};
 			name = Debug;
@@ -486,6 +526,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.udacity.MemeMeUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = MemeMe;
 			};
 			name = Release;

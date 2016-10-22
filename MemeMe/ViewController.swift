@@ -29,43 +29,45 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        prepareTextField(topTextField, defaultText: "TOP")
         
-        prepareTextField(bottomTextField, defaultText:"BOTTOM")
+         print("In viewDidLoad")
+    
+        prepareTextField(textField: topTextField, defaultText: "TOP")
+        
+        prepareTextField(textField: bottomTextField, defaultText:"BOTTOM")
     
         self.subscribeToKeyboardNotifications()
     }
 
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         print("In viewWillAppear")
         
-        cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
         
         if(imagePickerView.image != nil){
-            setTextFieldConstraints(imagePickerView.image!, view: imagePickerView )
-            shareButton.enabled = true
+            setTextFieldConstraints(image: imagePickerView.image!, view: imagePickerView )
+            shareButton.isEnabled = true
         }else{
         
-            shareButton.enabled = false
+            shareButton.isEnabled = false
         }
           
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //unsubscribeFromKeyboardNotifications()
     }
     
     func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:
-            UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:
+            NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name:
-            UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name:
+            NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     
@@ -78,10 +80,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
 
         if(!textFieldYConstant.isZero){
-            print("not zero")
+            //print("not zero")
             //disable previous contraints
-            topTextFieldConstraint?.active = false
-            bottomTextFieldConstraint?.active = false
+            topTextFieldConstraint?.isActive = false
+            bottomTextFieldConstraint?.isActive = false
     
         }
         
@@ -89,7 +91,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let scaleFactorWidth = view.frame.size.width / image.size.width
         
         let scaleFactorHeight = view.frame.size.height / image.size.height
-        
+    
         var minScaleFactor : CGFloat
         if(scaleFactorWidth < scaleFactorHeight){
             minScaleFactor = scaleFactorWidth
@@ -104,34 +106,52 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let newImageHeight = image.size.height * minScaleFactor
 
             textFieldYConstant = ( ( (view.frame.size.height - newImageHeight) / 2 ) * -1 )
-            textFieldYConstant = textFieldYConstant - 40
+            textFieldYConstant = textFieldYConstant - 60
             
-            print("newConstant: \(textFieldYConstant)")
+            //print("newConstant: \(textFieldYConstant)")
             
-            topTextFieldConstraint = imagePickerView.topAnchor.constraintEqualToAnchor(topTextField.bottomAnchor , constant: textFieldYConstant)
+            topTextFieldConstraint = imagePickerView.topAnchor.constraint(equalTo: topTextField.bottomAnchor , constant: textFieldYConstant)
             
-            topTextFieldConstraint?.active = true
+            topTextFieldConstraint?.isActive = true
             
-            bottomTextFieldConstraint = imagePickerView.bottomAnchor.constraintEqualToAnchor(bottomTextField.topAnchor , constant: (textFieldYConstant * -1))
+            bottomTextFieldConstraint = imagePickerView.bottomAnchor.constraint(equalTo: bottomTextField.topAnchor , constant: (textFieldYConstant * -1))
             
-            bottomTextFieldConstraint?.active = true
+            bottomTextFieldConstraint?.isActive = true
      
         }
 
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+      
+        coordinator.animate(alongsideTransition: nil, completion: {
+            _ in
+            
+            if(self.imagePickerView.image != nil){
+                self.setTextFieldConstraints(image: self.imagePickerView.image!, view: self.imagePickerView )
+                self.shareButton.isEnabled = true
+            }else{
+                
+                self.shareButton.isEnabled = false
+            }
+            
+        })
+        
+        
+    }
+    
     
     func prepareTextField(textField: UITextField, defaultText: String) {
-        print("IN-->prepareTextField")
+        //print("IN-->prepareTextField")
         let memeTextAttributes = [
-            NSStrokeColorAttributeName : UIColor.blackColor(),
-            NSForegroundColorAttributeName : UIColor.whiteColor(),
+            NSStrokeColorAttributeName : UIColor.black,
+            NSForegroundColorAttributeName : UIColor.white,
             NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
             NSStrokeWidthAttributeName : -3
-        ]
+        ] as [String : Any]
         textField.defaultTextAttributes = memeTextAttributes
-        textField.autocapitalizationType = .AllCharacters
-        textField.textAlignment = .Center
+        textField.autocapitalizationType = .allCharacters
+        textField.textAlignment = .center
         textField.delegate = memeTextFieldDelegate
         textField.text=defaultText
         
@@ -143,7 +163,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         print("In pickAnImageFromAlbum")
         
-        pickAnImageFromSource(UIImagePickerControllerSourceType.PhotoLibrary);
+        pickAnImageFromSource(source: UIImagePickerControllerSourceType.photoLibrary);
         
     }
     
@@ -151,7 +171,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
    
         print("In pickAnImageFromCamera")
         
-        pickAnImageFromSource(UIImagePickerControllerSourceType.Camera);
+        pickAnImageFromSource(source: UIImagePickerControllerSourceType.camera);
         
 
     }
@@ -167,21 +187,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         nextController.completionWithItemsHandler={
             
-            (s: String?, ok: Bool, items: [AnyObject]?, err:NSError?) -> Void in
+            (s: UIActivityType?, ok: Bool, items: [Any]?,err: Error?)  -> Void in
             
             if ok{
                 self.save()
+                
+                self.dismiss(animated: true, completion: nil)
+                
             }
-            
         }
         
-        self.presentViewController(nextController, animated: true, completion: nil)
+            
+        self.present(nextController, animated: true, completion: nil)
         
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
         
-        cancelOperation()
+        dismiss(animated: true, completion: nil)
+        
     }
     
     func cancelOperation(){
@@ -189,29 +213,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topTextField.text = "TOP"
         bottomTextField.text = "BOTTOM"
         imagePickerView.image = nil
-        shareButton.enabled = false
+        shareButton.isEnabled = false
         
-        topTextFieldConstraint?.active = false
-        bottomTextFieldConstraint?.active = false
+        topTextFieldConstraint?.isActive = false
+        bottomTextFieldConstraint?.isActive = false
     }
     
     func generateMemedImage() -> UIImage {
         
         // Hide toolbar and navbar
-        toolBar.hidden = true
-        navigationBar.hidden = true
+        toolBar.isHidden = true
+        navigationBar.isHidden = true
         
         // Render view to an image
         UIGraphicsBeginImageContext(view.frame.size)
-        view.drawViewHierarchyInRect(view.frame,
+        view.drawHierarchy(in: view.frame,
                                      afterScreenUpdates: true)
         memedImageFinal =
             UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
         // TODO:  Show toolbar and navbar
-        toolBar.hidden = false
-        navigationBar.hidden = false
+        toolBar.isHidden = false
+        navigationBar.isHidden = false
         
         return memedImageFinal
         
@@ -226,39 +250,41 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = source
-        presentViewController(imagePickerController, animated: true, completion: nil)
+        present(imagePickerController, animated: true, completion: nil)
     }
 
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         print("In Cancel action")
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
         
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        print("In Image was selected ")
+    
+        //print("In Image was selected ")
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            print("an image exists ")
+            //print("an image exists ")
             imagePickerView.image = image
-            imagePickerView.contentMode=UIViewContentMode.ScaleAspectFit
+            imagePickerView.contentMode=UIViewContentMode.scaleAspectFit
             
             
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
+    
+    
     
     func subscribeToKeyboardNotifications() {
         
         print("IN-->subscribeToKeyboardNotifications")
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:))    , name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:))    , name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide(notification:))   , name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     
@@ -270,9 +296,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if(memeTextFieldDelegate.currentEditingTextField==2){
             
-            keyboardHeight=getKeyboardHeight(notification)
+            keyboardHeight=getKeyboardHeight(notification: notification)
 
-            view.frame.origin.y =  getKeyboardHeight(notification) * -1
+            view.frame.origin.y =  getKeyboardHeight(notification: notification) * -1
         }
         
         
@@ -280,7 +306,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func keyboardWillHide(notification: NSNotification) {
         
-        print("IN-->keyboardWillHide")
+       // print("IN-->keyboardWillHide")
         
         if(memeTextFieldDelegate.currentEditingTextField==2){
             
@@ -293,21 +319,25 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         
-        print("IN-->getKeyboardHeight")
+        //print("IN-->getKeyboardHeight")
         
         let userInfo = notification.userInfo!
         let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         
-        print("IN-->getKeyboardHeight2: \( keyboardSize.CGRectValue().height)")
-        return keyboardSize.CGRectValue().height
+        //print("IN-->getKeyboardHeight2: \( keyboardSize.cgRectValue.height)")
+        return keyboardSize.cgRectValue.height
     }
     
     func save() {
         //Create the meme
-        _ = Meme( topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, image:
+        let meme = Meme( topTextField: topTextField.text!, bottomTextField: bottomTextField.text!, image:
             imagePickerView.image!,
                   memedImage: memedImageFinal)
+        
+        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme)
     }
+    
+    
     
     
 }

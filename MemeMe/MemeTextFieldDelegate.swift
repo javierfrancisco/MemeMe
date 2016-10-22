@@ -14,9 +14,9 @@ class MemeTextFieldDelegate: NSObject,  UITextFieldDelegate, UINavigationControl
     
     var currentEditingTextField=0
     
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         
-        print("In: textFieldDidBeginEditing")
+        //print("In: textFieldDidBeginEditing")
         
         
         if textField.text == "BOTTOM"{
@@ -34,10 +34,10 @@ class MemeTextFieldDelegate: NSObject,  UITextFieldDelegate, UINavigationControl
         
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        print("In: textFieldShouldReturn")
+        //print("In: textFieldShouldReturn")
         
         return true;
     }
